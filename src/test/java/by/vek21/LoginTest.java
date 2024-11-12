@@ -57,7 +57,6 @@ public class LoginTest {
                 .log().all()
                 .statusCode(200)
                 .body("error", equalTo("Введите email"));
-
     }
 
     @Test
@@ -75,7 +74,6 @@ public class LoginTest {
                 .log().all()
                 .statusCode(200)
                 .body("error", equalTo("Длина поля password должна быть от 6 до 32 символов"));
-
     }
 
     @Test
@@ -93,6 +91,20 @@ public class LoginTest {
                 .log().all()
                 .statusCode(200)
                 .body("error", equalTo("Ошибка валидации поля email"));
+    }
 
+    @Test
+    @DisplayName("test login with empty body")
+    public void testLoginWithEmptyBody() {
+        String body = "";
+
+        given()
+                .body(body)
+                .headers(LoginRequest.getHeaders())
+                .when()
+                .post(LoginRequest.URL_LOGIN)
+                .then()
+                .log().all()
+                .statusCode(200);
     }
 }
